@@ -12,34 +12,38 @@ $('#title').on('change',function(event){
         $('#other-title').hide();
 });
 
-$('#color').prepend('<option>Please select a tshirt theme</option>');
-$('#color option').eq(1).attr('selected',true);
-$('#color').each(function(){
-    $('#colors-js-puns').hide();
-});
+$("#colors-js-puns").hide();
+  $('#color').html("<option value='none'>Please select a T-shirt Theme</option>");
+    var themeSelected = false;
+    $( "#design").change(function() {
 
+  // if "Theme- JS Puns" is selected show relevant color options
 
-$('#design').on('change',function(event){
-    $('#color').each(function(){       
-        if ($(event.target).val() === "js puns"){
-            $('#colors-js-puns').show();
-            $("#color option:contains('Please select')").hide();
-            $("#color option:contains('I ♥ JS')").hide();     
-            $("#color option:contains('JS Puns')").show(); 
-        } else if ($(event.target).val() === "heart js"){
-            $('#color option').eq(4).attr('selected', true);
-            $('#colors-js-puns').show();
-            $("#color option:contains('Please select')").hide();        
-            $("#color option:contains('JS Puns')").hide();
-            $("#color option:contains('I ♥ JS')").show();           
-        }
-        else {
-            $('#colors-js-puns').hide();
-        }
+    if ($("#design option:selected").text() == "Theme - JS Puns") {
+          $('#colors-js-puns').show();
+          $("#color").html("<option value='cornflowerblue'>Cornflower Blue</option><option value='darkslategrey'>Dark Slate Grey</option><option value='gold'>Gold</option>");
+          themeSelected = true;
+          return themeSelected
+          }
+
+          // if "Theme - I ♥ JS" has been selected show relevant color options
+
+      else if ($("#design option:selected").text() == 'Theme - I ♥ JS') {
+              $('#colors-js-puns').show();
+              $("#color").html("<option value='tomato'>Tomato</option><option value='steelblue'>Steel Blue</option><option value='dimgrey'>Dim Grey</option>");
+              themeSelected = true;
+              return themeSelected;
+          }
+
+          // if user has not made a selection show HTML prompt instructing user to choose a T-shirt theme
+
+      else {
+              $('#colors-js-puns').show();
+              $('#color').html("<option value='none'>Please select a T-shirt Theme</option>");
+              themeSelected = true;
+              return $('#color').html("<option value='none'>Please select a T-shirt Theme</option>");
+      }
     });
-
-        
-});
 
 const $totCost = $('<p>');
 $('.activities').append($totCost);
