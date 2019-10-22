@@ -2,31 +2,41 @@ $(function(){
 $('#name').focus();
 $('#other-title').hide();
 $('#design option:first-child').hide();
-$('label[for="color"]').text("Please select a T-shirt theme");
+
+
+$('#title').on('change',function(event){
+    if($(event.target).val()==='other'){
+        $('#other-title').show();
+    }
+    else
+        $('#other-title').hide();
+});
+
+$('#color').prepend('<option>Please select a tshirt theme</option>');
+$('#color option').eq(1).attr('selected',true);
+$('#color').each(function(){
+    $('#colors-js-puns').hide();
+});
 
 
 $('#design').on('change',function(event){
-    if(event.target.value === "js puns")
-    {
-        for(let i=3;i<=5;i++){
-            $('#color option').eq(i).hide();
+    $('#color').each(function(){       
+        if ($(event.target).val() === "js puns"){
+            $('#colors-js-puns').show();
+            $("#color option:contains('Please select')").hide();
+            $("#color option:contains('I ♥ JS')").hide();     
+            $("#color option:contains('JS Puns')").show(); 
+        } else if ($(event.target).val() === "heart js"){
+            $('#color option').eq(4).attr('selected', true);
+            $('#colors-js-puns').show();
+            $("#color option:contains('Please select')").hide();        
+            $("#color option:contains('JS Puns')").hide();
+            $("#color option:contains('I ♥ JS')").show();           
         }
-        for(let i=0;i<=2;i++){
-            $('#color option').eq(i).show();
+        else {
+            $('#colors-js-puns').hide();
         }
-        $('#color option').attr('selected',false);
-        $('#color option').eq(0).attr('selected',true);
-    }
-    else{
-        for(let i=0;i<=2;i++){
-            $('#color option').eq(i).hide();
-        }
-        for(let i=3;i<=5;i++){
-            $('#color option').eq(i).show();
-        }
-        $('#color option').attr('selected',false);
-        $('#color option').eq(3).attr('selected',true);
-    }
+    });
 
         
 });
@@ -72,7 +82,11 @@ $('.activities').on('change',function(event){
     }
 });
 
-$('option[value="select method"]').hide();
+$('#payment option:contains("Select Payment Method")').prop('disabled', true);
+$('#payment option:contains("Credit Card")').prop('selected', true);
+
+$('#paypal').hide();
+$('#bitcoin').hide()
 
 $('#payment').on('change',function(event){
     const currOption = event.target.value;
